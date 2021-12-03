@@ -92,9 +92,10 @@ def get_btag(btag, season, mode, lbs):
         mode = ""
     else:
         mode = "-hardcore"
-
+    
     res = f"```fix\nClassements S{season} pour le joueur {btag} :```\n"
     for lb in lbs:
+
         found = False
         # recherche du joueur dans tous les leaderboards
         url = f'https://assets.maxroll.gg/leaderboards/s{season}-eu-rift{mode}-{lb}.json'
@@ -110,8 +111,8 @@ def get_btag(btag, season, mode, lbs):
             else:
                 # Flag joueur trouvé pour ne pas sortir tous les run classés d'un même lb
                 for player in run['player_data']:
-                    if player['btag'] == btag and not found:
+                    if player.get('btag') == btag and not found:
                         found = True
-                        res = res + f"[{lb.upper()}] **Rang {run['rift_data']['api_rank']}** -> GR{run['rift_data']['grlvl']} en {run['rift_data']['time']}\n"
+                        res = res + f"[{lb.upper()}] **Rang {run['rift_data']['api_rank']}** -> GR{run['rift_data']['grlvl']} en {run['rift_data']['time']} (__p{player['plvl']}__)\n"
     return res
 

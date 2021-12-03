@@ -77,7 +77,11 @@ async def on_message(message):
             r = r + f"```!crusader -S23```"
             r = r + f"```!team-4 -S05 --soft```"
             r = r + "\n```fix\nUsage : classements par BattleTag```<*Coming soon*>"
-    if 'r' in locals() : await message.channel.send(r)
+    if 'r' in locals():
+        if r.count('\n') < 4:
+            await message.channel.send(f"{r}*<Pas de classement Top1000 EU à afficher>*")
+        else:
+            await message.channel.send(r)
 
 # Exécution du bot
 client.run(token)
