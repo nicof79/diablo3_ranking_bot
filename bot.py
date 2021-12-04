@@ -22,8 +22,8 @@ async def on_ready():
 async def on_message(message):
     print(f"Message reçu : '{message.content}'")
     cmd = message.content
-    # Si le message posté ne commence pas par un '!' c'est pas une commande
-    if cmd[0] == "!":
+    # message traité si commence par un '!' et est sur le canal écouté 
+    if cmd[0] == "!" and message.channel.name == "bot_jo":
         cmd = cmd[1:]
 
         ### Commandes classements BriTs
