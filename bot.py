@@ -16,7 +16,10 @@ client = discord.Client()
 # Feedback bot en ligne
 @client.event
 async def on_ready():
+    print(datetime.datetime.now()) 
     print(">> Bot prêt à l'écoute <<")
+    channel = client.get_channel(os.getenv('BOT_CHANNEL'))#  channel a mettre dans un fichier de config
+    await channel.send("Bonjour, Je suis à l'écoute de vos commandes (!help)") #  Sends message to channel
 
 # Fonction d'écoute de mot clef
 @client.event
