@@ -1,13 +1,14 @@
 import discord
-import maxroll_scrap
+import os
+from dotenv import load_dotenv
 import re
+import maxroll_scrap
 
-# TODO : Valorisation du token du bot à adapter en fonction de l'hébergement
-token = open(".env", "r")
-token = token.read()
+# Load secrete and config Variable File
+load_dotenv('.env')
 
 # Instanciation liste des leaderboards surveillés
-lboards = ['barbarian', 'monk','dh', 'wd', 'wizard','crusader', 'team-2', 'team-3', 'team-4']
+lboards = ['barbarian','crusader','dh','monk','wd','wizard','team-2','team-3','team-4']
 
 # TODO : Personnalisation du client en mode objet
 client = discord.Client()
@@ -23,7 +24,7 @@ async def on_message(message):
     print(f"Message reçu : '{message.content}'")
     cmd = message.content
     # message traité si commence par un '!' et est sur le canal écouté 
-    if cmd[0] == "!" and message.channel.name == "bot_jo":
+    if cmd[0] == "!" and message.channel.name == os.getenv('BOT_CHANNEL'):
         cmd = cmd[1:]
 
         ### Commandes classements BriTs
@@ -84,4 +85,4 @@ async def on_message(message):
             await message.channel.send(r)
 
 # Exécution du bot
-client.run(token)
+client.run(os.getenv('TOKEN'))
