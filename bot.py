@@ -19,8 +19,6 @@ client = discord.Client()
 async def on_ready():
     print(datetime.datetime.now()) 
     print(">> Bot prêt à l'écoute <<")
-    channel = client.get_channel(os.getenv('BOT_CHANNEL'))#  channel a mettre dans un fichier de config
-    await channel.send("Bonjour, Je suis à l'écoute de vos commandes (!help)") #  Sends message to channel
 
 # Fonction d'écoute de mot clef
 @client.event
@@ -28,7 +26,7 @@ async def on_message(message):
     print(f"Message reçu : '{message.content}'")
     cmd = message.content
     # message traité si commence par un '!' et est sur le canal écouté 
-    if cmd[0] == "!" and message.channel.name == os.getenv('BOT_CHANNEL'):
+    if cmd[0] == "!" and message.channel.name == os.getenv('BOT_CHANNEL_NAME'):
         cmd = cmd[1:]
 
         ### Commandes classements BriTs
@@ -84,18 +82,18 @@ async def on_message(message):
             r = r + "\n```fix\nUsage : classements par BattleTag```<*Coming soon*>"
 
         if cmd == "test":
-            field1 = f"**![ladder]** [*-Sxx*] [*--soft*]\n__Liste des ladders__ :\n{str(lboards)}\n**Option** *-S'numéro de saison sur 2 caractères (01 à {str(maxroll_scrap.get_current_season())})'* -> Facultatif, saison en cours par défaut.\n **Option** *--hc* : retourne les classements hardcore -> Facultatif, classements softcore par défaut.\n"
+            field1 = f"\n__Liste des ladders__ :\n{str(lboards)}\n**Option** *-S'numéro de saison sur 2 caractères (01 à {str(maxroll_scrap.get_current_season())})'* -> Facultatif, saison en cours par défaut.\n **Option** *--hc* : retourne les classements hardcore -> Facultatif, classements softcore par défaut.\n"
             field2 = "!dh\n!crusader -S23\n!team-4 -S05 --hc\n"
             field3 = "Facultatif, classements softcore par défaut.\n"
             #### Create the initial embed object ####
-            embedVar=discord.Embed(title="D3RANKINGBOT HELP PAGE", description="Explication des commandes du Bot", color=0x109319)
+            embedVar=discord.Embed(title="Retrouvez les classements en Hardcore et Softcore\n de vos heros et ceux des membres de votre clan", description="Vous trouverez ci dessous les commandes du Bot et leur utilisation", color=0x109319)
             # Add author, thumbnail, fields, and footer to the embed
-            embedVar.set_author(name="RBD3", icon_url="https://i.pinimg.com/564x/0f/78/35/0f78351ab8e87c159ce442d7fb6912a5.jpg")
+            embedVar.set_author(name="Diablo III Ranking Bot", icon_url="https://static.wikia.nocookie.net/dauntless_gamepedia_en/images/a/a8/Riftsoul_Shard_Icon_001.png")
             embedVar.set_thumbnail(url="https://static.wikia.nocookie.net/dauntless_gamepedia_en/images/a/a8/Riftsoul_Shard_Icon_001.png")
-            embedVar.add_field(name="Les BriT dans le classement", value=field1, inline=True) 
-            embedVar.add_field(name="Exemples :", value=field2, inline=True)
+            embedVar.add_field(name="**![ladder]** [*-Sxx*] [*--soft*]", value=field1, inline=False) 
+            embedVar.add_field(name="Exemples :", value=field2, inline=False)
             embedVar.add_field(name="Usage Classements par BattleTag", value=field3, inline=False)
-            embedVar.set_footer(text="This is the footer. It contains text at the bottom of the embed")
+            embedVar.set_footer(text="Sont seulement pris en compte les joueurs du Top 1000")
             await message.channel.send(embed=embedVar)
 
     if 'r' in locals():
