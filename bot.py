@@ -3,6 +3,7 @@ import os
 from dotenv import load_dotenv
 import re
 import maxroll_scrap
+import datetime
 
 # Load secrete and config Variable File
 load_dotenv('.env')
@@ -81,6 +82,22 @@ async def on_message(message):
             r = r + f"```!crusader -S23```"
             r = r + f"```!team-4 -S05 --soft```"
             r = r + "\n```fix\nUsage : classements par BattleTag```<*Coming soon*>"
+
+        if cmd == "test":
+            field1 = f"**![ladder]** [*-Sxx*] [*--soft*]\n__Liste des ladders__ :\n{str(lboards)}\n**Option** *-S'numéro de saison sur 2 caractères (01 à {str(maxroll_scrap.get_current_season())})'* -> Facultatif, saison en cours par défaut.\n **Option** *--hc* : retourne les classements hardcore -> Facultatif, classements softcore par défaut.\n"
+            field2 = "!dh\n!crusader -S23\n!team-4 -S05 --hc\n"
+            field3 = "Facultatif, classements softcore par défaut.\n"
+            #### Create the initial embed object ####
+            embedVar=discord.Embed(title="D3RANKINGBOT HELP PAGE", description="Explication des commandes du Bot", color=0x109319)
+            # Add author, thumbnail, fields, and footer to the embed
+            embedVar.set_author(name="RBD3", icon_url="https://i.pinimg.com/564x/0f/78/35/0f78351ab8e87c159ce442d7fb6912a5.jpg")
+            embedVar.set_thumbnail(url="https://static.wikia.nocookie.net/dauntless_gamepedia_en/images/a/a8/Riftsoul_Shard_Icon_001.png")
+            embedVar.add_field(name="Les BriT dans le classement", value=field1, inline=True) 
+            embedVar.add_field(name="Exemples :", value=field2, inline=True)
+            embedVar.add_field(name="Usage Classements par BattleTag", value=field3, inline=False)
+            embedVar.set_footer(text="This is the footer. It contains text at the bottom of the embed")
+            await message.channel.send(embed=embedVar)
+
     if 'r' in locals():
         if r.count('\n') < 4:
             await message.channel.send(f"{r}*<Pas de classement Top1000 EU à afficher>*")
