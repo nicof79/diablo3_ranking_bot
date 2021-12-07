@@ -3,10 +3,18 @@ import json
 
 
 def get_current_season():
+    
     url = 'https://assets.maxroll.gg/leaderboards/leaderboard_index.json'
     response = requests.get(url)
     data = json.loads(response.content)
-    return data['season']['live_season_identifier']['eu']
+    #Si pas de saison en cours :
+    if data['season']['live_season_identifier']['eu'] == None:
+        print(f"InterSaison : la saison {data['season']['identifiers']['eu'][-1]} est terminée, la suivante n'est pas commencée.")
+        return data['season']['identifiers']['eu'][-1] # derniere valeur du dictionnaire des saisons
+    else:
+        print(f"La saison {data['season']['identifiers']['eu'][-1]} est toujours en cours")
+        return data['season']['live_season_identifier']['eu']
+
 
 def get_single_class(lb, season, mode):
     
