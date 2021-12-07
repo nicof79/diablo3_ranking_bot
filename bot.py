@@ -9,7 +9,7 @@ import datetime
 load_dotenv('.env')
 
 # Instanciation liste des leaderboards surveillés
-lboards = ['barbarian','crusader','dh','monk','wd','wizard','team-2','team-3','team-4']
+lboards = ['barbarian','crusader','dh','monk','necromancer','wd','wizard','team-2','team-3','team-4']
 
 # TODO : Personnalisation du client en mode objet
 client = discord.Client()
