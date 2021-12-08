@@ -69,30 +69,29 @@ async def on_message(message):
 
         
         # Liste des commandes
-        if cmd == "help":
-            r = f"```fix\nUsage : classements BriTs\n> Affiche les 5 premiers BriTs par ladder```"
-            r = r + "**![ladder]** [*-Sxx*] [*--soft*]\n"
-            r = r + f"__Liste des ladders__ : {str(lboards)}\n"
-            r = r + f"\n **Option** *-S'numéro de saison sur 2 caractères (01 à {str(maxroll_scrap.get_current_season())})'* -> Facultatif, saison en cours par défaut."
-            r = r + f"\n **Option** *--soft* : retourne les classements softcore -> Facultatif, classements hardcore par défaut.\n"
-            r = r + f"Exemples :"
-            r = r + f"```!dh```"
-            r = r + f"```!crusader -S23```"
-            r = r + f"```!team-4 -S05 --soft```"
-            r = r + "\n```fix\nUsage : classements par BattleTag```<*Coming soon*>"
 
-        if cmd == "test":
-            field1 = f"\n__Liste des ladders__ :\n{str(lboards)}\n**Option** *-S'numéro de saison sur 2 caractères (01 à {str(maxroll_scrap.get_current_season())})'* -> Facultatif, saison en cours par défaut.\n **Option** *--hc* : retourne les classements hardcore -> Facultatif, classements softcore par défaut.\n"
-            field2 = "!dh\n!crusader -S23\n!team-4 -S05 --hc\n"
-            field3 = "Facultatif, classements softcore par défaut.\n"
+        if cmd == "help":
+            #Contenu des embed
+            usage = f"la commande doit debutée par ** ! ** et etre suivie sans espace du classement désiré parmi la liste ci-apres\n{str(lboards)}"
+            option = f"separées d'un espace de la commande et prefixé de 1 ou 2 tirets,\
+            \nelles permettent de précicer une saison et/ou un mode:\
+            \n**-S** suivi directement du numero de saison sur 2 caracteres\
+            \n**--** suivi directement de *sc*/*hc* pour respectivement softcore ou hardcore\
+            \nSans l'ajout d'option, les classements seront ceux de \nla derniere __*saison*__ en __*Hardcore*__"
+            exemple = f"!dh : *Chasseur de demon en Hardcore de la derniere saison {str(maxroll_scrap.get_current_season())}*\
+            \n!crusader -S17 : *Croisé en Hardcore de la saison 17*\
+            \n!team-4 -S05 --sc : *4 joueurs en Softcore de la saison 5*"
+            usage_btag = "<*Coming soon*>"
+            vide=""
             #### Create the initial embed object ####
-            embedVar=discord.Embed(title="Retrouvez les classements en Hardcore et Softcore\n de vos heros et ceux des membres de votre clan", description="Vous trouverez ci dessous les commandes du Bot et leur utilisation", color=0x109319)
+            embedVar=discord.Embed(title="Consultez les classements Hardcore et Softcore\n de vos heros et ceux des membres de votre clan", description="Ci-dessous les commandes du Bot et leurs utilisations", color=0x9b59b6)
             # Add author, thumbnail, fields, and footer to the embed
             embedVar.set_author(name="Diablo III Ranking Bot", icon_url="https://static.wikia.nocookie.net/dauntless_gamepedia_en/images/a/a8/Riftsoul_Shard_Icon_001.png")
             embedVar.set_thumbnail(url="https://static.wikia.nocookie.net/dauntless_gamepedia_en/images/a/a8/Riftsoul_Shard_Icon_001.png")
-            embedVar.add_field(name="**![ladder]** [*-Sxx*] [*--soft*]", value=field1, inline=False) 
-            embedVar.add_field(name="Exemples :", value=field2, inline=False)
-            embedVar.add_field(name="Usage Classements par BattleTag", value=field3, inline=False)
+            embedVar.add_field(name="Les Commandes ", value=usage, inline=False)
+            embedVar.add_field(name="Les Options", value=option, inline=False)
+            embedVar.add_field(name="Exemples de demande de classement", value=exemple, inline=False)
+            embedVar.add_field(name="Usage Classements par BattleTag", value=usage_btag, inline=False)
             embedVar.set_footer(text="Sont seulement pris en compte les joueurs du Top 1000")
             await message.channel.send(embed=embedVar)
 
