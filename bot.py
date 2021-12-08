@@ -2,8 +2,8 @@ import discord
 import os
 from dotenv import load_dotenv
 import re
-import maxroll_scrap
 import datetime
+import maxroll_scrap
 
 # Load secrete and config Variable File
 load_dotenv('.env')
